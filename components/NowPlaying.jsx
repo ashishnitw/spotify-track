@@ -10,6 +10,7 @@ export default function NowPlaying() {
       try {
         const res = await fetch('/api/spotify/now');
         const data = await res.json();
+        console.log('nowPlaying', data);
         setNowPlaying(data);
       } catch (err) {
         console.error(err);
@@ -49,23 +50,49 @@ export default function NowPlaying() {
       <div className="flex-1">
         <div className="flex justify-between items-center">
           <div>
-            <p className="text-sm font-semibold text-white">{nowPlaying.item.name}</p>
-            <p className="text-xs text-gray-400">{nowPlaying.item.artists.map(a => a.name).join(', ')}</p>
+            <p className="text-sm text-white">
+              <a
+                href={nowPlaying.item.external_urls.spotify}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:underline"
+              >
+                {nowPlaying.item.name}
+              </a>
+            </p>
+            <p className="text-xs text-gray-400">
+              {nowPlaying.item.artists.map((a, i) => (
+                <span key={a.id}>
+                  <a
+                    href={a.external_urls.spotify}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:underline"
+                  >
+                    {a.name}
+                  </a>
+                  {i < nowPlaying.item.artists.length - 1 && ', '}
+                </span>
+              ))}
+            </p>
           </div>
           <span className="text-xs text-gray-400">
             {Math.floor(nowPlaying.progress_ms / 1000 / 60)}:
             {(Math.floor(nowPlaying.progress_ms / 1000) % 60).toString().padStart(2, '0')}
-            /
+            {" / "}
             {Math.floor(nowPlaying.item.duration_ms / 1000 / 60)}:
             {(Math.floor(nowPlaying.item.duration_ms / 1000) % 60).toString().padStart(2, '0')}
           </span>
         </div>
-        <div className="w-full bg-gray-700 rounded-full h-1 mt-1">
+
+        {/* Progress Bar */}
+        <div className="w-full bg-gray-700 h-1.5 mt-1 rounded-full">
           <div
-            className="bg-green-500 h-1 rounded-full transition-all duration-500"
+            className="h-1.5 rounded-full bg-gradient-to-r from-green-400 via-green-500 to-green-600 animate-[progressGlow_2s_ease-in-out_infinite]"
             style={{ width: `${progress}%` }}
           ></div>
         </div>
+
       </div>
     </div>
   );

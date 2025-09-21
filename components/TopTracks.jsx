@@ -27,27 +27,41 @@ function SongList({ tracks }) {
               <img
                 src={track.album.images[0].url}
                 alt={track.name}
-                className="w-10 h-10 rounded object-cover hover:opacity-80 transition"
+                className="w-8 h-8 rounded object-cover hover:opacity-80 transition"
               />
             </a>
 
             {/* Song Info */}
             <div className="flex-1 min-w-0">
-              <a
-                href={track.external_urls.spotify}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="block text-white font-medium truncate hover:underline"
-              >
-                {track.name}
-              </a>
-              <p className="text-sm text-gray-400 truncate">
-                {track.artists.map((a) => a.name).join(', ')}
+              <p className="text-white text-sm">
+                <a
+                  href={track.external_urls.spotify}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:underline"
+                >
+                  {track.name}
+                </a>
+              </p>
+              <p className="text-xs text-gray-300 truncate">
+                {track.artists.map((a, i) => (
+                  <span key={a.id}>
+                    <a
+                      href={a.external_urls.spotify}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="hover:underline"
+                    >
+                      {a.name}
+                    </a>
+                    {i < track.artists.length - 1 && ', '}
+                  </span>
+                ))}
               </p>
             </div>
 
             {/* Duration */}
-            <span className="text-sm text-gray-400">
+            <span className="text-xs text-gray-400">
               {Math.floor(track.duration_ms / 1000 / 60)}:
               {(Math.floor(track.duration_ms / 1000) % 60).toString().padStart(2, '0')}
             </span>
