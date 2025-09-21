@@ -7,12 +7,12 @@ export default function Home() {
   const [activeTab, setActiveTab] = useState('recent');
 
   return (
-    <main className="min-h-screen bg-[#121212] text-white pb-25">
+    <main className="min-h-screen bg-[#121212] text-white pb-20">
       {/* Now Playing Bar */}
       <NowPlaying />
 
       {/* Tabs */}
-      <div className="max-w-3xl mx-auto pt-10">
+      <div className="max-w-3xl mx-auto pt-2">
         <div className="flex border-b border-gray-700 mb-6">
           {['recent', 'medium', 'long'].map((tab) => (
             <button

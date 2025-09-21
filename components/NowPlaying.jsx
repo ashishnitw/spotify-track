@@ -32,7 +32,9 @@ export default function NowPlaying() {
   if (!nowPlaying?.item) {
     return (
       <div className="fixed bottom-0 left-0 right-0 bg-[#181818] border-t border-gray-700 px-4 py-3 flex items-center justify-center shadow-lg">
-        <p className="text-sm text-gray-400">Not playing anything right now 🎶</p>
+        <p className="text-gray-400 text-sm italic animate-pulse">
+          No song is currently playing
+        </p>
       </div>
     );
   }
